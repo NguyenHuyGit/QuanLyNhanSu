@@ -1,0 +1,127 @@
+﻿@model IPagedList<QLNV4_60135761.Models.NhanVien>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    string gtinh = "";
+    int i = 0;
+    if (Session["DangNhap"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+@using PagedList.Mvc;
+@using PagedList;
+
+<head>
+    <style>
+        .img_nv {
+            width: 90px;
+        }
+    </style>
+</head>
+<h2 class="text-center">DANH SÁCH NHÂN VIÊN</h2>
+@if (Session["QuanLy"] != null)
+{
+    <p>
+        <a href="@Url.Action("Create","NhanViens_60135761")" class="btn btn-primary">Thêm mới <i class="fas fa-user-plus"></i></a>
+        <a href="@Url.Action("ExportToExcel","NhanViens_60135761")" class="btn btn-success">Xuất Excel <i class="fas fa-file-excel" style="font-size: 18px;"></i></a>
+    </p>
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <p><b>Tổng: @ViewBag.SoNV dòng</b></p>
+    </div>
+    <div class="col-md-8 text-right">
+        @using (Html.BeginForm("Index", "NhanViens_60135761", FormMethod.Get))
+        {
+            <input type="text" name="search" placeholder="Nhập họ tên nhân viên..." class="form-control" style="display:inline-block;" />
+            <input type="submit" name="submit" value="Tìm kiếm" class="btn btn-info" />
+        }
+    </div>
+</div>
+<table class="table table-bordered table-striped table-bordered">
+    <tr>
+        <th>
+            STT
+        </th>
+        <th>
+            Mã nhân viên
+        </th>
+        <th>
+            Họ và tên
+        </th>
+        <th>
+            Ngày sinh
+        </th>
+        <th>
+            Ảnh
+        </th>
+        <th>
+            Giới tính
+        </th>
+        <th>
+            Trạng thái
+        </th>
+        <th>
+            Người quản lý
+        </th>
+        <th>Chức năng</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{ i++;}
+                @i
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaNV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoTenNV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgaySinh)
+            </td>
+            <td>
+                @if (item.GioiTinh == true)
+                {
+                    gtinh = "Nam";
+                }
+                else
+                {
+                    gtinh = "Nữ";
+                }
+                @gtinh
+            </td>
+            <td class="img_nv">
+                <img src="~/Public/Images/@Url.Content(item.AnhNV)" style="height: 100%; width: 100%;" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrangThai)
+            </td>
+            <td>
+                
+                @Html.Action("TenNguoiQuanLy", "NhanViens_60135761",new { manvql = item.MaNVQL})
+            </td>
+            <td>
+                @if (Session["QuanLy"] != null)
+                {
+                    @Html.ActionLink("Cập nhật", "Edit", new { id = item.MaNV }, new { @class = "btn btn-success", @style = "width: 100px;" })
+                    @Html.ActionLink("Xoá", "Delete", new { id = item.MaNV }, new { @class = "btn btn-danger", @style = "width: 100px;" })
+                }
+                @Html.ActionLink("Xem chi tiết", "Details", new { id = item.MaNV }, new { @class = "btn btn-info", @style = "width: 100px;" })
+
+            </td>
+        </tr>
+    }
+
+</table>
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+<center>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</center>

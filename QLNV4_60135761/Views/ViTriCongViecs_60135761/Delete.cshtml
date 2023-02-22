@@ -1,0 +1,54 @@
+﻿@model QLNV4_60135761.Models.ViTriCongViec
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    if (Session["QuanLy"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+
+
+
+<h3 style="color:red;">Bạn có chắc chắn muốn xoá thông tin này?</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Mã vị trí
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaVT)
+        </dd>
+        <dt>
+            Tên vị trí
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenViTriCongViec)
+        </dd>
+
+        <dt>
+            Bộ phận
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoPhan.TenBoPhan)
+        </dd>
+
+    </dl>
+
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xoá" class="btn btn-danger" style="width:100px;" />
+            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-info", @style = "width: 100px;" })
+        </div>
+    }
+</div>

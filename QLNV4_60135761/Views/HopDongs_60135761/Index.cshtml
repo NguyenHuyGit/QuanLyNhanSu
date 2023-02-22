@@ -1,0 +1,115 @@
+﻿@model IPagedList<QLNV4_60135761.Models.HopDong>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    int i = 0;
+    if (Session["DangNhap"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+@using PagedList.Mvc;
+@using PagedList;
+
+
+<h2>DANH SÁCH HỢP ĐỒNG</h2>
+
+
+@if (Session["QuanLy"] != null)
+{
+    <p>
+        <a href="@Url.Action("Create","HopDongs_60135761")" class="btn btn-primary">Thêm mới <i class="fas fa-plus"></i></a>
+    </p>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <p><b>Tổng: @ViewBag.SoHD dòng</b></p>
+    </div>
+    <div class="col-md-8 text-right">
+        @using (Html.BeginForm("Index", "HopDongs_60135761", FormMethod.Get))
+        {
+            <input type="text" name="search" placeholder="Nhập số hợp đồng..." class="form-control" style="display:inline-block;" />
+            <input type="submit" name="submit" value="Tìm kiếm" class="btn btn-info" />
+        }
+    </div>
+</div>
+
+<table class="table table-bordered table-hover table-striped ">
+    <tr>
+        <th>
+            STT
+        </th>
+        <th>
+            Số hợp đồng
+        </th>
+        <th>
+            Ngày ký
+        </th>
+        <th>
+            Ngày bắt đầu
+        </th>
+        <th>
+            Ngày kết thúc
+        </th>
+        <th>
+            Tình trạng
+        </th>
+        <th>
+           Nhân viên
+        </th>
+        <th>Chức năng</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{ i++;}
+                @i
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoHD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayKy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayBatDau)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayKetThuc)
+            </td>           
+            <td>               
+                @if (item.TinhTrang == "Còn hạn")
+                {
+                    <p style="color:green"><b><i>@item.TinhTrang</i></b></p>
+                }
+                else
+                {
+                    <p style="color:red"><b><i>@item.TinhTrang</i></b></p>
+                }
+
+            </td>                    
+            <td>
+                @Html.DisplayFor(modelItem => item.NhanVien.HoTenNV)
+            </td>
+            <td>
+                @if (Session["QuanLy"] != null)
+                {
+                    @Html.ActionLink("Cập nhật", "Edit", new { id = item.SoHD }, new { @class = "btn btn-success", @style = "width: 100px;" })
+                    @Html.ActionLink("Xoá", "Delete", new { id = item.SoHD }, new { @class = "btn btn-danger", @style = "width: 100px;" })
+                }
+                @Html.ActionLink("Xem chi tiết", "Details", new { id = item.SoHD }, new { @class = "btn btn-info", @style = "width: 100px;" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+ Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+<center>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</center>
+

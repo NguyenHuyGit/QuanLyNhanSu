@@ -1,0 +1,101 @@
+﻿@model IPagedList<QLNV4_60135761.Models.TaiKhoan>
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    int i = 0;
+    string active = "";
+    if (Session["Admin"] == null)
+    {
+        Response.Redirect("/QuanTriVien/DangNhap", false);
+    }
+}
+
+<h2>DANH SÁCH TÀI KHOẢN</h2>
+
+
+<p>
+    @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-primary", @style = "width: 120px;" })
+</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <p><b>Tổng: @ViewBag.SoTK dòng</b></p>
+    </div>
+    <div class="col-md-8 text-right">
+        @using (Html.BeginForm("Index", "TaiKhoans_60135761", FormMethod.Get))
+        {
+            <input type="text" name="search" placeholder="Nhập tên email..." class="form-control" style="display:inline-block;" />
+            <input type="submit" name="submit" value="Tìm kiếm" class="btn btn-info" />
+        }
+    </div>
+</div>
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        <th>
+            STT
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Ngày tạo
+        </th>
+        <th>
+            Quyền
+        </th>
+        <th>
+            Kích hoạt
+        </th>
+        <th>
+            Nhân viên
+        </th>
+        <th>Chức năng</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{i++;}
+                @i
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayTao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quyen)
+            </td>
+            <td>
+                @if (item.KichHoat == true)
+                {
+                    active = "Kích hoạt";
+                }
+                else
+                {
+                    active = "Khoá";
+                }
+                @active
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhanVien.HoTenNV)
+            </td>
+            <td>
+                @Html.ActionLink("Cập nhật", "Edit", new { id = item.MaTK }, new { @class = "btn btn-success", @style = "width: 100px;" })
+                @*@Html.ActionLink("Details", "Details", new { id=item.MaTK })*@
+                @Html.ActionLink("Xoá", "Delete", new { id = item.MaTK }, new { @class = "btn btn-danger", @style = "width: 100px;" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+<center>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</center>

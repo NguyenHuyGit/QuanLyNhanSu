@@ -1,0 +1,77 @@
+﻿@model QLNV4_60135761.Models.DeXuatTangLuong
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    if (Session["QuanLy"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+
+<h3 style="color:red;">Bạn có chắc chắn muốn xoá thông tin đề xuất?</h3>
+<div>
+    <h4>DeXuatTangLuong</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Mã đề xuất
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaDeXuat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayDeXuat)
+        </dt>
+
+        <dd>
+            Ngày đề xuất
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LiDoDeXuat)
+        </dt>
+
+        <dd>
+            Lí do đề xuất
+        </dd>
+
+        <dt>
+            Lương mong muốn
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LuongMongMuon)
+        </dd>
+
+        <dt>
+            Trạng thái
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+
+        <dt>
+            Họ tên nhân viên
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NhanVien.HoTenNV)
+        </dd>
+
+    </dl>
+
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xoá" class="btn btn-danger" style="width:100px;" />
+            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-info", @style = "width: 100px;" })
+        </div>
+    }
+</div>

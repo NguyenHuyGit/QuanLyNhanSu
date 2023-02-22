@@ -1,0 +1,83 @@
+﻿@model QLNV4_60135761.Models.TaiKhoan
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DangNhap</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Public/Login/vendor/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Public/Login/Fonts/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Public/Login/vendor/animate.css" rel="stylesheet" />
+    <link href="~/Public/Login/vendor/hamburgers.min.css" rel="stylesheet" />
+    <link href="~/Public/Login/vendor/animsition.min.css" rel="stylesheet" />
+    <link href="~/Public/Login/vendor/daterangepicker.css" rel="stylesheet" />
+    <link href="~/Public/Login/css/main.css" rel="stylesheet" />
+    <link href="~/Public/Login/css/util.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-form validate-form p-l-55 p-r-55 p-t-178">
+                    @using (Html.BeginForm("DangNhap", "TaiKhoans_60135761", FormMethod.Post))
+                    {
+                        <span class="login100-form-title">
+                            THÔNG TIN TÀI KHOẢN
+                        </span>
+                        @Html.AntiForgeryToken()
+                        <div class="wrap-input100 validate-input m-b-16" data-validate="Nhập email">
+                            @*<input class="input100" type="text" name="email" placeholder="Email">*@
+                            @Html.TextBoxFor(m => m.Email, "", new { @class = "input100", @placeholder = "Email", @type = "email" })
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input m-b-16" data-validate="Nhập mật khẩu">
+                            @*<input class="input100" type="password" name="password" placeholder="Password">*@
+                            @Html.PasswordFor(m => m.Password, new { @class = "input100", @placeholder = "Password" })
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div>
+                            <select name="quyen" class="form-control">
+                                <option value="Nhân viên" selected>Nhân viên</option>
+                                <option value="Quản lý">Quản lý</option>
+                            </select>
+                        </div>
+
+                        <div class="text-right p-t-13 p-b-23">
+
+                        </div>
+
+                        <div class="container-login100-form-btn">
+                            <button class="login100-form-btn">
+                                ĐĂNG NHẬP
+                            </button>
+                        </div>
+
+                        <div class="flex-col-c p-t-170 p-b-40">
+                            <span style="color:#ff0000;font-style:italic;">@Html.ValidationSummary()</span>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Public/Login/vendor/jquery-3.2.1.min.js"></script>
+    <script src="~/Public/Login/vendor/animsition.min.js"></script>
+    <script src="~/Public/Login/vendor/popper.js"></script>
+    <script src="~/Public/Login/vendor/bootstrap.min.js"></script>
+    <script src="~/Public/Login/vendor/select2.min.js"></script>
+    <script src="~/Public/Login/vendor/moment.min.js"></script>
+    <script src="~/Public/Login/vendor/daterangepicker.js"></script>
+    <script src="~/Public/Login/vendor/countdowntime.js"></script>
+    <script src="~/Public/Login/js/main.js"></script>
+</body>
+</html>

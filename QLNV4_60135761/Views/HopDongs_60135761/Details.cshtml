@@ -1,0 +1,99 @@
+﻿@model QLNV4_60135761.Models.HopDong
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    if (Session["DangNhap"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+
+<h2>THÔNG TIN CHI TIẾT HỢP ĐỒNG</h2>
+
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Số hợp đồng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoHD)
+        </dd>
+
+        <dt>
+            Ngày ký
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayKy)
+        </dd>
+
+        <dt>
+            Ngày bắt đầu
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayBatDau)
+        </dd>
+
+        <dt>
+            Ngày kết thúc
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayKetThuc)
+        </dd>
+
+        <dt>
+            Người đại diện
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NguoiDaiDien)
+        </dd>
+
+        <dt>
+            Tình trạng
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TinhTrang)
+        </dd>
+
+        <dt>
+            Mã lương
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LuongNhanVien.MaLuong)
+        </dd>
+
+        <dt>
+            Nhân viên
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NhanVien.HoTenNV)
+        </dd>
+
+        <dt>
+            Ghi chú
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GhiChu)
+        </dd>
+
+    </dl>
+</div>
+<hr />
+<p class="col-md-offset-1">
+    @if (Session["QuanLy"] != null)
+    {
+        @Html.ActionLink("Cập nhật", "Edit", new { id = Model.SoHD }, new { @class = "btn btn-success", @style = "width: 100px;" })
+    }
+
+    @Html.ActionLink("Quay lại  ", "Index", null, new { @class = "btn btn-info", @style = "width: 100px;" })
+</p>

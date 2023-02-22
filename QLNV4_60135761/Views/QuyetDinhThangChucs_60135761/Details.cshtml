@@ -1,0 +1,59 @@
+﻿@model QLNV4_60135761.Models.QuyetDinhThangChuc
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    if (Session["DangNhap"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+
+<h2>Chi tiết thông tin quyết định</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Số quyết định
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoQD)
+        </dd>
+
+
+        <dt>
+            Ngày tạo
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayTao)
+        </dd>
+
+        <dt>
+            Nội dung
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoiDungQuyetDinh)
+        </dd>
+
+        <dt>
+            Nhân viên
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NhanVien.HoTenNV)
+        </dd>
+
+    </dl>
+</div>
+<hr />
+<p class="col-md-offset-1">
+    @if (Session["QuanLy"] != null)
+    {
+        @Html.ActionLink("Cập nhật", "Edit", new { id = Model.SoQD })
+    }
+    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-info", @style = "width: 100px;" })
+</p>

@@ -1,0 +1,67 @@
+﻿@model QLNV4_60135761.Models.TaiKhoan
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div style="display:none;">
+    <h4>TaiKhoan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayTao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayTao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quyen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quyen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KichHoat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KichHoat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NhanVien.HoTenNV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NhanVien.HoTenNV)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaTK }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

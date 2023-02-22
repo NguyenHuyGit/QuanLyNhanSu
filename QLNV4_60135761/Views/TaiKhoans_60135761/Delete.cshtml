@@ -1,0 +1,85 @@
+﻿@model QLNV4_60135761.Models.TaiKhoan
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    string active = "";
+    if (Session["Admin"] == null)
+    {
+        Response.Redirect("/QuanTriVien/DangNhap", false);
+    }
+}
+
+
+<h3 style="color:red;">Bạn có chắc chắn muốn xoá tài khoản này?</h3>
+<div>  
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Email
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Password
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            Ngày tạo
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayTao)
+        </dd>
+
+        <dt>
+            Quyền
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quyen)
+        </dd>
+
+        <dt>
+            Kích hoạt
+        </dt>
+
+        <dd>
+            @if (Model.KichHoat == true)
+            {
+                active = "Kích hoạt";
+            }
+            else
+            {
+                active = "Khoá";
+            }
+            @active
+        </dd>
+
+        <dt>
+            Nhân viên
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NhanVien.HoTenNV)
+        </dd>
+
+    </dl>
+
+    <hr />
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color col-md-offset-1">
+    <input type="submit" value="Xoá" class="btn btn-danger" style="width:100px" />
+    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-info", @style = "width: 100px;" })
+</div>
+    }
+</div>

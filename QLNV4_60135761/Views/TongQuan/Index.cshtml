@@ -1,0 +1,213 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    if (Session["QuanLy"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+
+<head>
+
+
+    <link href="~/Content/all.min.css" rel="stylesheet" />
+
+    <style>
+        .box {
+            border-radius: 10px;
+            margin: 20px;
+            padding: 3px 5px;
+            height: 250px;
+        }
+
+
+            .box .card-header {
+                border-bottom: 1px solid #000;
+            }
+
+        .box-birthday {
+            background-color: #FFFF00;
+        }
+
+        .box-hd {
+            background-color: #AEEDE2;
+        }
+
+        .card-box a {
+            text-decoration: none;
+        }
+
+        .card-box h3 {
+            font-size: 40px;
+        }
+
+        .card-box p {
+            font-size: 25px;
+        }
+
+        .card-box a, .card-box h3, .card-box p {
+            color: #F0F0F0;
+        }
+
+        .card-box {
+            border-radius: 10px;
+            padding: 5px 10px;
+            height: 150px;
+        }
+
+        .col-md-6 {
+            margin: 10px 0;
+        }
+
+        .emp-box {
+            background-color: #20c997;
+        }
+
+        .pb-box {
+            background-color: #17a2b8;
+        }
+
+        .bp-box {
+            background-color: #dc3545;
+        }
+
+        .job-box {
+            background-color: #ffc107;
+        }
+
+        .icon {
+            position: absolute;
+            top: 20px;
+            right: 48px;
+        }
+
+            .icon i {
+                font-size: 80px;
+            }
+    </style>
+</head>
+
+<center>
+    <h2>CÔNG TY INFODATION</h2>
+</center>
+
+<div class="row">
+    <div class="col-md-8">
+        <h2 class=" text-center">TỔNG QUAN</h2>
+        <div class="row">
+            <!-- tổng nhân viên-->
+            <div class="col-md-6">
+                <div class="card emp-box card-box">
+                    <div class="box-info">
+                        <h3>@ViewBag.SoNV</h3>
+
+                        <p>Nhân viên</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <center>
+                        <a href="@Url.Action("Index","NhanViens_60135761")" class="text-center">
+                            Xem chi tiết
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </center>
+                </div>
+            </div>
+            <!-- tổng hợp đồng-->
+            <div class="col-md-6">
+                <div class="card pb-box card-box">
+                    <div class="box-info">
+                        <h3>@ViewBag.SoHD</h3>
+
+                        <p>Hợp đồng</p>
+                    </div>
+                    <div class="icon">
+                        <i class="far fa-address-book"></i>
+                    </div>
+                    <center>
+                        <a href="@Url.Action("Index","HopDongs_60135761")" class="text-center">
+                            Xem chi tiết
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </center>
+                </div>
+            </div>
+
+            <!-- tổng bộ phận-->
+            <div class="col-md-6">
+                <div class="card bp-box card-box">
+                    <div class="box-info">
+                        <h3>@ViewBag.SoBP</h3>
+
+                        <p>Bộ phận</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-archive"></i>
+                    </div>
+                    <center>
+                        <a href="@Url.Action("Index","BoPhans_60135761")" class="text-center">
+                            Xem chi tiết
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </center>
+                </div>
+            </div>
+
+            <!-- tổng vị trí-->
+            <div class="col-md-6">
+                <div class="card job-box card-box">
+                    <div class="box-info">
+                        <h3>@ViewBag.SoVT</h3>
+
+                        <p>Vị trí công việc</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-business-time"></i>
+                    </div>
+                    <center>
+                        <a href="@Url.Action("Index","ViTriCongViecs_60135761")" class="text-center">
+                            Xem chi tiết
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 notice">
+        <h2 class="text-center">THÔNG BÁO</h2>
+        <div class="card box box-birthday">
+            <div class="card-header">
+                <b><i>Sinh nhật trong tháng <i class="fas fa-birthday-cake"></i></i></b>
+
+            </div>
+            <div class="card-body">
+                @foreach (var nv in ViewBag.listsinhnhat)
+                {
+                    <p>@nv.HoTenNV @nv.NgaySinh.ToString("dd/MM/yyyy")</p>
+                }
+            </div>
+        </div>
+
+        <div class="card box box-hd">
+            <div class="card-header">
+                <b><i> Hợp đồng sắp hết hạn trong tháng <i class="fas fa-calendar-alt"></i></i></b>
+                <i></i>
+            </div>
+            <div class="card-body">
+                @foreach (var hd in ViewBag.listhopdonghethan)
+                {
+                    <p>
+                        @hd.SoHD @Html.Action("TenNhanVien", "TongQuan", new { manv = hd.MaNV })
+                        <b><i style="color: orange;">@hd.NgayKetThuc.ToString("dd/MM/yyyy")</i></b>
+                    </p>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+

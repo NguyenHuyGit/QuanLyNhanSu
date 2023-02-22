@@ -1,0 +1,35 @@
+﻿@model QLNV4_60135761.Models.ViTriCongViec
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div style="display:none;">
+    <h4>ViTriCongViec</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenViTriCongViec)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenViTriCongViec)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BoPhan.TenBoPhan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoPhan.TenBoPhan)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaVT }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

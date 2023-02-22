@@ -1,0 +1,121 @@
+﻿@model IPagedList<QLNV4_60135761.Models.PhieuDanhGia>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    int i = 0;
+    string khoa = "";
+    if (Session["DangNhap"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+
+@using PagedList.Mvc;
+@using PagedList;
+
+<h2>DANH SÁCH ĐÁNH GIÁ HIỆU SUẤT</h2>
+
+
+@if (Session["MaNhanVien"] != null)
+{
+    <p>
+        @Html.ActionLink("Đánh giá", "DanhGia", null, new { @class = "btn btn-primary", @style = "width: 120px;" })
+    </p>
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <p><b>Tổng: @ViewBag.SoPhieu dòng</b></p>
+    </div>
+    <div class="col-md-8 text-right">
+        @using (Html.BeginForm("Index", "PhieuDanhGias_60135761", FormMethod.Get))
+        {
+            <input type="text" name="search" placeholder="Nhập mã phiếu..." class="form-control" style="display:inline-block;" />
+            <input type="submit" name="submit" value="Tìm kiếm" class="btn btn-info" />
+        }
+    </div>
+</div>
+
+<table class="table table-hover table-bordered table-striped">
+    <tr>
+        <th>
+            STT
+        </th>
+        <th>Mã phiếu</th>
+        <th>
+            Tên đánh giá
+        </th>
+        <th>
+            Kỳ đánh giá
+        </th>
+        <th>
+            Năm
+        </th>
+        <th>
+            Khoá
+        </th>
+        <th>
+            Nhân viên
+        </th>
+        <th>Chức năng</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{i++; }
+                @i
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaPhieu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenDanhGia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KyDanhGia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nam)
+            </td>
+            <td>
+                @if (item.Khoa == true)
+                {
+                    khoa = "Khoá";
+                }
+                else
+                {
+                    khoa = "Mở";
+                }
+                @khoa
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NhanVien.HoTenNV)
+            </td>
+            <td class="text-center" style="font-size: 18px;">
+                @if (Session["MaNhanVien"] != null)
+                {
+                    <a href="@Url.Action("CapNhatPhieu","PhieuDanhGias_60135761",new { id = item.MaPhieu })" class="text-success"><abbr title="Sửa phiếu"><i class="fas fa-edit"></i></abbr> </a>
+                    <a href="@Url.Action("ChiTiet","PhieuDanhGias_60135761",new { id = item.MaPhieu })"><abbr title="Chi tiết phiếu"><i class="fas fa-user-edit"></i></abbr> </a>
+                }
+                else 
+                {
+
+                    <a href="@Url.Action("ChiTiet","PhieuDanhGias_60135761",new { id = item.MaPhieu })"><abbr title="Chi tiết phiếu"><i class="fas fa-user-edit"></i></abbr> </a>
+                    <a href="@Url.Action("XoaPhieu","PhieuDanhGias_60135761",new { id = item.MaPhieu })" class="text-danger"> <abbr title="Xoá phiếu"><i class="fas fa-trash-alt"></i></abbr></a>
+                }
+
+
+            </td>
+        </tr>
+    }
+
+</table>
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+<center>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</center>
+
+

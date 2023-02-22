@@ -1,0 +1,62 @@
+﻿@model IEnumerable<QLNV4_60135761.Models.QuyetDinhThangChuc>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    if (Session["DangNhap"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+
+<h2>DANH SÁCH QUYẾT ĐỊNH</h2>
+
+@if (Session["QuanLy"] != null)
+{
+    <p>
+        <a href="@Url.Action("Create","QuyetDinhThangChucs_60135761")" class="btn btn-primary">Thêm mới <i class="fas fa-plus"></i></a>
+    </p>
+}
+
+<table class="table table-hover table-bordered table-striped ">
+    <tr>
+        <th>
+            Số quyết định
+        </th>
+        <th>
+            Nội dung
+        </th>
+        <th>
+            Ngày tạo
+        </th>
+        <th>
+            Nhân viên
+        </th>
+        <th>Chức năng </th>        
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>@Html.DisplayFor(modelItem => item.SoQD)</td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NoiDungQuyetDinh)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NgayTao)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.NhanVien.HoTenNV)
+    </td>
+    <td>
+        @if (Session["QuanLy"] != null)
+        {
+            @Html.ActionLink("Cập nhật", "Edit", new { id = item.SoQD }, new { @class = "btn btn-success", @style = "width: 100px;" })
+            @Html.ActionLink("Xoá", "Delete", new { id = item.SoQD }, new { @class = "btn btn-danger", @style = "width: 100px;" })
+        }
+        @Html.ActionLink("Xem", "Details", new { id = item.SoQD }, new { @class = "btn btn-info", @style = "width: 100px;" })
+    </td>
+</tr>
+    }
+
+</table>

@@ -1,0 +1,78 @@
+﻿@model IPagedList<QLNV4_60135761.Models.ViTriCongViec>
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    int i = 0;
+    if (Session["QuanLy"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+
+<h2>DANH SÁCH CÁC VỊ TRÍ CÔNG VIỆC</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-primary", @style = "width: 120px;" })
+</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <p><b>Tổng: @ViewBag.SoVT dòng</b></p>
+    </div>
+    <div class="col-md-8 text-right">
+        @using (Html.BeginForm("Index", "ViTriCongViecs_60135761", FormMethod.Get))
+        {
+            <input type="text" name="search" placeholder="Nhập tên vị trí.." class="form-control" style="display:inline-block;" />
+            <input type="submit" name="submit" value="Tìm kiếm" class="btn btn-info" />
+        }
+    </div>
+</div>
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+        <th>
+            STT
+        </th>
+        <th>
+            Mã vị trí
+        </th>
+        <th>
+            Tên vị trí
+        </th>
+        <th>
+            Bộ phận
+        </th>
+        <th>Chức năng</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{ i++;}
+                @i
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaVT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenViTriCongViec)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BoPhan.TenBoPhan)
+            </td>
+            <td>
+                @Html.ActionLink("Cập nhật", "Edit", new { id = item.MaVT }, new { @class = "btn btn-success", @style = "width: 100px;" })
+                @*@Html.ActionLink("Details", "Details", new { id = item.MaVT }) |*@
+                @Html.ActionLink("Xoá", "Delete", new { id = item.MaVT }, new { @class = "btn btn-danger", @style = "width: 100px;" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+<center>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</center>

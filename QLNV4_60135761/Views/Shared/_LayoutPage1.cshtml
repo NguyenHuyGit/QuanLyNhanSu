@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/_LayoutStyle.css" rel="stylesheet" />
+    <link href="~/Content/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            padding-top: 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-bar">
+        <ul>
+            @if (Session["QuanLy"] != null || Session["Admin"] != null)
+            {
+                <li><a href="#">@Html.ActionLink("Trang chính", "../TongQuan/Index")</a></li>
+            }
+
+            @if (Session["Admin"] != null)
+            {
+                <li>
+                    <a href="#">@Html.ActionLink("Quản trị hệ thống", "../TaiKhoans_60135761/Index")</a>
+                    <div class="sub-menu-1">
+                        <ul>
+                            <li><a href="#">@Html.ActionLink("Thêm mới tài khoản", "../TaiKhoans_60135761/Create")</a></li>
+                            <li><a href="#">@Html.ActionLink("Phân quyền đăng nhập", "../TaiKhoans_60135761/Index")</a></li>
+                        </ul>
+                    </div>
+                </li>
+            }
+            <li>
+                <a href="#">@Html.ActionLink("Quản lý nhân viên", "../NhanViens_60135761/Index")</a>
+                @if (Session["QuanLy"] != null || Session["Admin"] != null)
+                {
+                    <div class="sub-menu-1">
+                        <ul>
+                            <li><a href="#">@Html.ActionLink("Cập nhật nhân viên", "../NhanViens_60135761/Index")</a></li>
+                            <li><a href="#">@Html.ActionLink("Thêm mới nhân viên", "../NhanViens_60135761/Create")</a></li>
+                            <li><a href="#">@Html.ActionLink("Tìm kiếm nhân viên", "../NhanViens_60135761/TimKiemNV")</a></li>
+                        </ul>
+                    </div>
+                }
+
+            </li>
+            @if (Session["QuanLy"] != null || Session["Admin"] != null)
+            {
+                <li>
+                    <a href="#">Quản lý danh mục</a>
+                    <div class="sub-menu-1">
+                        <ul>                            
+                            <li><a href="#">@Html.ActionLink("Cập nhật chức vụ", "../ChucVus_60135761/Index")</a></li>
+                            <li><a href="#">@Html.ActionLink("Cập nhật vị trí công việc", "../ViTriCongViecs_60135761/Index")</a></li>
+                            <li><a href="#">@Html.ActionLink("Cập nhật quốc tịch", "../QuocTiches_60135761/Index")</a></li>
+                            <li><a href="#">@Html.ActionLink("Cập nhật loại nhân viên", "../LoaiNhanViens_60135761/Index")</a></li>
+                            <li><a href="#">@Html.ActionLink("Cập nhật bộ phận", "../BoPhans_60135761/Index")</a></li>
+                            <li><a href="#">@Html.ActionLink("Cập nhật trình độ đào tạo", "../TrinhDoDaoTaos_60135761/Index")</a></li>
+                        </ul>
+                    </div>
+                </li>
+            }
+            <li>
+                <a href="#">@Html.ActionLink("Quản lý lương", "../LuongNhanViens_60135761/Index")</a>
+                <div class="sub-menu-1">
+                    <ul>
+
+                        @if (Session["QuanLy"] != null)
+                        {
+                            <li><a href="#">@Html.ActionLink("Cập nhật lương hiên tại", "../LuongNhanViens_60135761/Index")</a></li>
+                            <li><a href="#">@Html.ActionLink("Danh sách đề xuất", "../DeXuatTangLuongs_60135761/Index")</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="#">@Html.ActionLink("Đề xuất tăng lương", "../DeXuatTangLuongs_60135761/Create")</a></li>
+                        }
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="#">@Html.ActionLink("Quản lý hợp đồng", "../HopDongs_60135761/Index")</a>
+                @if (Session["QuanLy"] != null || Session["Admin"] != null)
+                {
+                    <div class="sub-menu-1">
+                        <ul>
+                            <li><a href="#">@Html.ActionLink("Cập nhật hợp đồng", "../HopDongs_60135761/Index")</a></li>
+                            <li><a href="#">@Html.ActionLink("Thêm mới hợp đồng", "../HopDongs_60135761/Create")</a></li>
+                            <li><a href="#">@Html.ActionLink("Tìm kiếm hợp đồng", "../HopDongs_60135761/TimKiemHopDong")</a></li>
+                        </ul>
+                    </div>
+                }
+
+            </li>
+            <li>
+                <a href="#">@Html.ActionLink("Đánh giá nhân sự", "../PhieuDanhGias_60135761/Index")</a>
+                <div class="sub-menu-1">
+                    <ul>
+                        @if (Session["MaNhanVien"] != null)
+                        {
+                            <li><a href="#">@Html.ActionLink("Đánh giá hiệu suất", "../PhieuDanhGias_60135761/DanhGia")</a></li>
+                            <li><a href="#">@Html.ActionLink("Quyết định thăng chức", "../QuyetDinhThangChucs_60135761/Index")</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="#">@Html.ActionLink("Danh sách đánh giá", "../PhieuDanhGias_60135761/Index")</a></li>
+                            <li><a href="#">@Html.ActionLink("Quyết định thăng chức", "../QuyetDinhThangChucs_60135761/Create")</a></li>
+                        }
+
+
+                    </ul>
+                </div>
+            </li>
+            @if (Session["QuanLy"] != null || Session["Admin"] != null)
+            {
+                <li>
+                    <a href="#">Báo cáo thống kê</a>
+                    <div class="sub-menu-1">
+                        <ul>
+                            <li><a href="@Url.Action("ExportToExcel","NhanViens_60135761")">Báo cáo theo tháng</a></li>
+                            <li><a href="@Url.Action("Index","ThongKe")">Thống kê theo tháng</a></li>
+                        </ul>
+                    </div>
+                </li>
+            }
+            <li>
+                <a href="#">
+                    Tài khoản
+                </a>
+                <div class="sub-menu-1">
+                    <ul>
+                        @*<li><a href="#">Đổi mật khẩu</a></li>*@
+                        <li><a href="@Url.Action("../TaiKhoans_60135761/DangXuat")">Đăng xuất</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+

@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "CapNhatPhieu";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    if (Session["DangNhap"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+
+<h2 style="color:red;" class="text-center">Chức năng này hiện chưa thực hiện được</h2>
+

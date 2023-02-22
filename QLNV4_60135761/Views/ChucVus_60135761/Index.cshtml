@@ -1,0 +1,48 @@
+﻿@model IEnumerable<QLNV4_60135761.Models.ChucVu>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    int i = 0;
+    if (Session["QuanLy"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+
+<h2>DANH SÁCH CÁC CHỨC VỤ</h2>
+
+<p>
+    @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-primary", @style = "width: 120px;" })
+</p>
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        <th>STT</th>
+        <th>Mã chức vụ</th>
+        <th>
+            Tên chức vụ
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @{ i++;}
+        @i
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.MaCV)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TenChucVu)
+    </td>
+    <td>
+        @Html.ActionLink("Cập nhật", "Edit", new { id = item.MaCV }, new { @class = "btn btn-success", @style = "width: 100px;" })
+        @*@Html.ActionLink("Details", "Details", new { id = item.MaCV }) |*@
+        @Html.ActionLink("Xoá", "Delete", new { id = item.MaCV }, new { @class = "btn btn-danger", @style = "width: 100px;" })
+    </td>
+</tr>
+}
+
+</table>

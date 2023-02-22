@@ -1,0 +1,115 @@
+﻿@model QLNV4_60135761.Models.HopDong
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    if (Session["QuanLy"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+
+<h2>CẬP NHẬT THÔNG TIN HỢP ĐỒNG</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.SoHD)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SoHD, "Số HD", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SoHD, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+            @Html.ValidationMessageFor(model => model.SoHD, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NgayKy, "Ngày ký", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NgayKy, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+            @Html.ValidationMessageFor(model => model.NgayKy, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NgayBatDau, "Ngày bắt đầu", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NgayBatDau, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+            @Html.ValidationMessageFor(model => model.NgayBatDau, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NgayKetThuc, "Ngày kết thúc", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NgayKetThuc, new { htmlAttributes = new { @class = "form-control",@readonly="true" } })
+            @Html.ValidationMessageFor(model => model.NgayKetThuc, "", new { @class = "text-danger" })
+            <p style="color: red;"><i>@ViewBag.error</i></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NguoiDaiDien, "Người đại diện", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NguoiDaiDien, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NguoiDaiDien, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TinhTrang, "Tình trạng", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.EditorFor(model => model.TinhTrang, new { htmlAttributes = new { @class = "form-control" } })*@
+            <select name="tinhtrang" class="form-control">
+                <option value="@Model.TinhTrang" style="display:none;">@Model.TinhTrang</option>
+                <option value="Còn hạn">Còn hạn</option>
+                <option value="Hết hạn">Hết hạn</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.TinhTrang, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MaNV, "Nhân viên", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("MaNV", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MaLuong, "Mã lương", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("MaLuong", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MaLuong, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GhiChu,"Ghi chú", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control" } })*@
+            @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Lưu" class="btn btn-success" style="width:100px;"/>
+            @Html.ActionLink("Quay lại  ", "Index", null, new { @class = "btn btn-info", @style = "width: 100px;" })
+        </div>
+    </div>
+</div>
+}

@@ -1,0 +1,27 @@
+﻿@model QLNV4_60135761.Models.BoPhan
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Details</h2>
+
+<div style="display:none;">
+    <h4>BoPhan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenBoPhan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenBoPhan)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaBP }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

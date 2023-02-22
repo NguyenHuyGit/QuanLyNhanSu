@@ -1,0 +1,320 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    if (Session["QuanLy"] == null)
+    {
+        Response.Redirect("/TaiKhoans_60135761/DangNhap", false);
+    }
+}
+
+<head>
+    @*<script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>*@
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Public/chart/exporting.js"></script>
+    <script src="~/Public/chart/highcharts.js"></script>
+    <script src="~/Public/chart/highcharts-3d.js"></script>
+    <style>
+        .highcharts-credits {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h2>THỐNG KÊ NHÂN SỰ TRONG CÔNG TY</h2>
+
+    </center>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="chart1"></div>
+            <p class="text-center text-des">
+                <b>Thống kê nhân sự theo giới tính</b>
+            </p>
+        </div>
+
+        <div class="col-md-6">
+            <div id="chart2"></div>
+            <p class="text-center text-des">
+                <b>Thống kê nhân sự theo trình độ</b>
+            </p>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="container"></div>
+            <p class="text-center text-des">
+                <b>Thống kê nhân sự theo bộ phận</b>
+            </p>
+        </div>
+
+        <div class="col-md-6">
+            <div id="chart4"></div>
+            <p class="text-center text-des">
+                <b>Thống kê biến động nhân sự</b>
+            </p>
+        </div>
+    </div>
+
+
+    <div id="3d-chart" style="margin-top:10px;">
+        
+        <div id="container1"></div>
+        <p class="text-center text-des">
+            <b>Thống kê hiệu suất nhân sự tháng @DateTime.Now.Month/@DateTime.Now.Year</b>
+        </p>            
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+
+            $.getJSON("/ThongKe/GetGender", function (data) {
+                Highcharts.chart('chart1', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: ''
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.2f}% <br>Số lượng: {point.y}</b> '
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage: .2f} % <br>Số lượng: {point.y}',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Tỉ lệ',
+                        colorByPoint: true,
+                        data: [{
+                            name: 'Nam',
+                            y: data.MaleCount
+                        }, {
+                            name: 'Nữ',
+                            y: data.FemaleCount
+                        }]
+                    }]
+                });
+            });
+
+            $.getJSON("/ThongKe/GetTrinhDo", function (data) {
+                Highcharts.chart('chart2', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: ''
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.2f}% <br>Số lượng: {point.y}</b> '
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage: .2f} % <br>Số lượng: {point.y}',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            },
+                            showInLegend: true
+                        }
+
+                    },
+                    series: [{
+                        name: 'Tỉ lệ',
+                        colorByPoint: true,
+                        data: [{
+                            name: 'Cao đẳng',
+                            y: data.CaoDang
+                        }, {
+                            name: 'Đại học',
+                            y: data.Daihoc
+                        }, {
+                            name: 'Tiến sĩ',
+                            y: data.TienSi
+                        }, {
+                            name: 'Thạc sĩ',
+                            y: data.ThacSi
+                        }]
+                    }]
+                });
+            });
+
+             $.getJSON("/ThongKe/GetBoPhan", function (data) {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'pie',
+                        options3d: {
+                            enabled: true,
+                            alpha: 45
+                        }
+                    },
+                    title: {
+                        text: ''
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    plotOptions: {
+                        pie: {
+                            innerSize: 130,
+                            depth: 45,
+                            cursor: 'pointer',
+                        }
+
+                    },
+                    series: [{
+                        name: 'Số lượng',
+                        data: [
+                            ['Kế toán', data.KeToan],
+                            ['Hành chính', data.HanhChinh],
+                            ['IT', data.IT],
+                            ['Nhân sự', data.NhanSu],
+                            ['Vận hành', data.VanHanh]
+                        ]
+                    }]
+                });
+            });
+
+            $.getJSON("/ThongKe/BienDongNhanSu", function (data) {
+                 Highcharts.chart('chart4', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: [
+                        'Tháng '+ @DateTime.Now.Month.ToString() + ' Năm ' + @DateTime.Now.Year
+                     ],
+                    crosshair: false
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Số lượng'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y} </b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true //hiển thị
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,                            
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        },
+                    }
+                },
+                series: [{
+                    name: 'Đang làm việc',
+                    data: [data.LamViec]
+
+                }, {
+                    name: 'Nghỉ việc',
+                    data: [data.NghiViec]
+                }]
+            });
+            });
+
+            
+            $.getJSON("/ThongKe/HieuSuat", function (data) {
+                Sum = []
+                Names = []
+                for (var i = 0; i < data.length; i++) {
+                    Names.push(data[i].name);
+                    Sum.push(data[i].sum);
+                }
+                Highcharts.chart('container1', {
+                    chart: {
+                        type: 'column',
+                        options3d: {
+                            enabled: true,
+                            alpha: 15,
+                            beta: 15,
+                            depth: 50,
+                            viewDistance: 25
+                        }
+                    },
+                    title: {
+                        text: ''
+                    },
+                   colors: ['#6BB2A0'],
+                    xAxis: {
+                        categories: Names
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Điểm'
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Hiệu suất',
+                        data: Sum
+                    }]
+                    
+                });
+               
+            });
+
+
+            });
+
+    </script>
+
+</body>
+
