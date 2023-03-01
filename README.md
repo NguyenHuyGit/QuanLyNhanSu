@@ -1,5 +1,7 @@
 # QuanLyNhanSu
+- Website được xây dựng bằng ngôn ngữ C# trên nền tảng ASP.NET MVC và có kết nối với cơ sở dữ liệu SQL Server.
 
+# Chạy chương trình
 - Chạy file .sql để tạo cơ sở dữ liệu trong MS SQL Server.
 - Thay đổi data source trong connection string trong file Web.config  (Visual Studio).
 - Tài khoản đăng nhập nằm trong bảng TaiKhoan, mật khẩu mặc định là 123 và kèm theo quyền truy cập cho từng tài khoản.
