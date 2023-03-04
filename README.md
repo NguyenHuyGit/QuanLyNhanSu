@@ -1,5 +1,6 @@
 # QuanLyNhanSu
-- Website được xây dựng bằng ngôn ngữ C# trên nền tảng ASP.NET MVC và có kết nối với cơ sở dữ liệu SQL Server.
+- Front-end: HTML,CSS, Bootstrap 3, Jquery
+- Back-end: C#, ASP.NET MVC, SQL
 
 # Chạy chương trình
 - Chạy file .sql để tạo cơ sở dữ liệu trong MS SQL Server.
